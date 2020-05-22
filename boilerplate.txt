@@ -1,0 +1,17 @@
+<?php
+require_once 'init/init.php';
+$user_data = $user->getSessionData();
+
+if (isset($user_data)) {
+    $user_data['access'] != "admin" ? Helper::redirect("index.php") : '';
+} else {
+    Helper::redirect("login-user.php");
+}
+
+require "inc/header.php";
+
+?>
+
+<?php
+require "inc/footer.php";
+?>
