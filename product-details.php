@@ -1,5 +1,8 @@
 <?php
 require_once 'init/init.php';
+
+require "inc/header.php";
+
 $user_data = $user->getSessionData();
 
 if (isset($user_data)) {
@@ -14,7 +17,7 @@ $product = $products->fetchSingleProduct($id);
 $product_stocks = $products->fetchProductStocks($product['id']);
 $inventoryArr = [];
 
-require "inc/header.php";
+require "inc/navigation.php";
 
 ?>
 <h1>Product Details</h1>

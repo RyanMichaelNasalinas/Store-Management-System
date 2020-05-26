@@ -38,7 +38,7 @@ class Product extends Database
         $product = $stmt->fetch();
         $row = $stmt->rowCount();
 
-        return ($row > 0)  ? $product : parent::page404();
+        return ($row > 0)  ? $product : false;
     }
 
     public function addProductStocks(int $product_id, int $quantity, $price, $vendor_name, $batch_number,  $added_by)
@@ -56,6 +56,6 @@ class Product extends Database
         $product_stocks = $stmt->fetchAll();
         $row = $stmt->rowCount();
 
-        return ($row > 0) ? $product_stocks : parent::page404();
+        return ($row > 0) ? $product_stocks : false;
     }
 }

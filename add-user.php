@@ -1,5 +1,8 @@
+<?php require_once 'init/init.php'; ?>
+
 <?php
-require_once 'init/init.php';
+require "inc/header.php";
+
 $user_data = $user->getSessionData();
 
 if (isset($user_data)) {
@@ -7,10 +10,9 @@ if (isset($user_data)) {
 } else {
     Helper::redirect("login-user.php");
 }
+require "inc/navigation.php";
 
 ?>
-
-<?php require "inc/header.php"; ?>
 
 <?php
 if (isset($_POST['add_user'])) {

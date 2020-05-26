@@ -1,5 +1,8 @@
 <?php
 require_once 'init/init.php';
+
+require "inc/header.php";
+
 $user_data = $user->getSessionData();
 
 if (isset($user_data)) {
@@ -8,7 +11,7 @@ if (isset($user_data)) {
     Helper::redirect("login-user.php");
 }
 
-require "inc/header.php";
+require "inc/navigation.php";
 
 if (isset($_POST['add_product'])) {
     $product_name = $_POST['product_name'];

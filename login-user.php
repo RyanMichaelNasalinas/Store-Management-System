@@ -1,38 +1,61 @@
 <?php
 require_once 'init/init.php';
+require '././helpers/helpers.php';
+
+$user_data = $user->getSessionData();
+
+if ($user_data != null) {
+    redirect("index.php");
+}
+
+$errors = [];
 
 if (isset($_POST['login'])) {
+
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $loginUser = $user->loginUser($username, $password);
 
-    if (empty($username) && empty($password)) {
-        echo "Username or Password should not be empty";
-    } else if (empty($username)) {
-        echo "Username should be empty";
-    } else if (empty($password)) {
-        echo "Password should not be empty";
-    } else if ($loginUser) {
-        Helper::redirect('index.php');
-    } else if ($loginUser == false) {
-        echo "Username or Password is incorrect";
+    $loginUser = $user->loginUser($username);
+
+    if (isEmpty($username) && isEmpty($password)) {
+        $errors[] = "Username and Password should be empty";
     } else {
-        echo "User Does not exist";
+        if (isEmpty($username)) {
+            $errors[] = "Username should not be empty";
+        }
+        if (isEmpty($password)) {
+            $errors[] = "Password should not be empty";
+        }
+    }
+
+    // If error is empty
+    if (empty($errors)) {
+        if ($loginUser != null) {
+            if (password_verify($password, $loginUser['password'])) {
+                redirect('index.php');
+            } else {
+                $errors[] = "Username or Password is Incorrect";
+            }
+        } else {
+            $errors[] = "User does not exists";
+        }
     }
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= Helper::getTitle(); ?></title>
+    <title><?= getTitle(); ?></title>
 </head>
 
 <body>
     <div class="container">
+        <?= displayError($errors); ?>
         <div class="form-container">
             <form action="" method="post">
                 <div class="form-input">

@@ -1,16 +1,22 @@
+<?php require 'init/init.php'; ?>
+
 <?php
-require_once 'init/init.php';
+
+require "inc/header.php";
+
 $user_data = $user->getSessionData();
 
 if (!$user_data) {
-    Helper::redirect("login-user.php");
+    redirect("login-user.php");
+    exit;
 }
+
 ?>
 
-<?php require "inc/header.php"; ?>
+<?php require 'inc/navigation.php'; ?>
 
 <div>
-    <p>Welcome <?= $user_data['full_name']; ?></p>
+    <p>Welcome <?= $user_data['username']; ?></p>
 </div>
 
 

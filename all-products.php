@@ -1,5 +1,7 @@
 <?php
 require_once 'init/init.php';
+
+require "inc/header.php";
 $user_data = $user->getSessionData();
 
 if (isset($user_data)) {
@@ -9,7 +11,8 @@ if (isset($user_data)) {
 }
 
 $products = $products->fetchProducts();
-require "inc/header.php";
+
+require "inc/navigation.php";
 ?>
 
 <div>

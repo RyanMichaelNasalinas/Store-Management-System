@@ -2,21 +2,33 @@
 
 class User extends Database
 {
-    public function loginUser($username, $password)
+    public function loginUser($username)
     {
         $stmt = $this->dbConn()->prepare("SELECT * FROM members WHERE username = :username");
         $stmt->execute(['username' => $username]);
+        $result = $stmt->fetch();
         $row = $stmt->rowCount();
 
         if ($row > 0) {
-            $result = $stmt->fetch();
-            // Fetch password from the DB and compare
             $this->setSessionUser($result);
-            $pw_verify = password_verify($password, $result['password']);
-
-            return $pw_verify ? true : false;
+            return $result;
+        } else {
+            return false;
         }
+
+        // if ($row > 0) {
+        //     $result = $stmt->fetch();
+        //     // Fetch password from the DB and compare
+        //     $this->setSessionUser($result);
+
+        //     $pw_verify = password_verify($password, $result['password']);
+
+        //     return $pw_verify ? $result : false;
+        // } else {
+        //     return false;
+        // }
     }
+
 
     public function addUser($username, $email, $password, $first_name, $last_name)
     {
@@ -53,6 +65,7 @@ class User extends Database
         }
         // Set user data
         $_SESSION['user_data'] = [
+            'username' => $userArray['username'],
             'full_name' => $userArray['first_name'] . " " . $userArray['last_name'],
             'access' => $userArray['access']
         ];
