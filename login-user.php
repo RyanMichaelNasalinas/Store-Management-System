@@ -4,9 +4,6 @@ require '././helpers/helpers.php';
 
 $user_data = $user->getSessionData();
 
-if ($user_data != null) {
-    redirect("index.php");
-}
 
 $errors = [];
 
@@ -40,9 +37,14 @@ if (isset($_POST['login'])) {
             $errors[] = "User does not exists";
         }
     }
+} else {
+    if ($user_data != null) {
+        redirect("index.php");
+    }
 }
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
